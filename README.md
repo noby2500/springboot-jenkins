@@ -1,3 +1,3 @@
 # springboot-jenkins
 # run 
-docker run -p 9090:9090 -p 50000:50000 jenkins
+docker run -d -p 9090:8080 -p 50000:50000 --name jenkinsContainer jenkins/jenkins
