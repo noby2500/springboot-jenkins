@@ -41,6 +41,8 @@
 	</dependencies>
 
 	<build>
+		<defaultGoal>package</defaultGoal>
+		<finalName>springboot-jenkins</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
