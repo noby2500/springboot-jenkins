@@ -1,6 +1,7 @@
 package co.th.best.springbootjenkins.controller;
 
 import co.th.best.springbootjenkins.entity.Product;
+import co.th.best.springbootjenkins.model.ProductDto;
 import co.th.best.springbootjenkins.model.req.ProductReq;
 import co.th.best.springbootjenkins.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ApiController {
     private ProductService productService;
 
     @GetMapping(value = "/getproducts")
-    public @ResponseBody ResponseEntity<?> getproducts() throws Exception {
+    public @ResponseBody ResponseEntity<?> getProducts() throws Exception {
         List<Product> productList = productService.getProductAll();
 
         if(!productList.isEmpty()) {
@@ -30,8 +31,8 @@ public class ApiController {
     }
 
     @PostMapping(value = "/product")
-    public @ResponseBody Object product(@RequestBody ProductReq req) throws Exception{
-        Product product = productService.getProduct(req);
+    public @ResponseBody ResponseEntity<?> product(@RequestBody ProductReq req) throws Exception{
+        ProductDto product = productService.getProduct(req);
 
         return new ResponseEntity<>(product, HttpStatus.OK);
     }

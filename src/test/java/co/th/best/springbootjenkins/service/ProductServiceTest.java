@@ -2,6 +2,7 @@ package co.th.best.springbootjenkins.service;
 
 
 import co.th.best.springbootjenkins.entity.Product;
+import co.th.best.springbootjenkins.model.ProductDto;
 import co.th.best.springbootjenkins.model.req.ProductReq;
 import co.th.best.springbootjenkins.repository.ProductRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,8 @@ public class ProductServiceTest {
     private Product product = new Product();
     private List<Product> productList = new ArrayList<>();
 
+    private ProductDto productDto = new ProductDto();
+
 
     private Date returnDate(String date) throws ParseException {
         String pattern = "yyyy-MM-dd";
@@ -44,6 +47,7 @@ public class ProductServiceTest {
     @BeforeEach
     public void setup() throws ParseException {
     mockProductList();
+
     }
     @Test
     public void test_getProductAll_success_case() throws Exception {
@@ -51,13 +55,20 @@ public class ProductServiceTest {
         assertEquals(productList,service.getProductAll());
 
     }
+
+    @Test
+    public void test_getProductAll_null_case() throws Exception {
+        assertNotEquals(productList,service.getProductAll());
+
+    }
     @Test
     public void test_getProduct_success_case() throws Exception {
         mockProduct();
+        mockProductDto();
         ProductReq req = new ProductReq();
         req.setId("1");
         Mockito.when(repo.findById("1")).thenReturn(Optional.ofNullable(product));
-        assertEquals(product,service.getProduct(req));
+        assertEquals(productDto.getBarcode(),service.getProduct(req).getBarcode());
     }
 
 
@@ -81,4 +92,12 @@ public class ProductServiceTest {
         return product;
     }
 
+    private ProductDto mockProductDto (){
+
+        productDto.setBarcode("11111");
+        productDto.setName("test");
+        productDto.setPrice(10.50);
+
+        return productDto;
+    }
 }
